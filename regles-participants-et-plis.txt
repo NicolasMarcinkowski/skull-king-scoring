@@ -1,0 +1,39 @@
+SPÉCIFICATIONS FONCTIONNELLES — PARTICIPANTS ET PLIS
+
+Ces règles remplacent les passages correspondants de SF-01, SF-02 et SF-03.
+Les autres règles de score, de bonus, de sauvegarde et de présentation restent applicables.
+
+OBJECTIF
+Comptabiliser uniquement les plis des joueurs inscrits à la partie.
+
+COMPORTEMENT ATTENDU
+La partie accueille de 2 à 8 joueurs humains.
+Seuls les participants inscrits disposent de champs de saisie.
+Les plis annoncés et remportés sont initialisés à zéro pour chaque joueur.
+Il suffit de saisir les valeurs différentes de zéro.
+
+RÈGLES MÉTIER
+La somme des annonces est libre.
+La somme des plis remportés par les joueurs doit correspondre au nombre de cartes
+distribuées par joueur, diminué de 1 si un pli est détruit par le Kraken.
+Ce contrôle est identique à deux joueurs et à plus de deux joueurs.
+Aucun participant automatique n'est ajouté.
+Le nombre de cartes distribuées reste la référence du calcul des points.
+Chaque joueur dispose d'un compteur de bonus par paliers de 5.
+Les bonus sont accordés uniquement si son annonce est exacte.
+
+UI/UX
+L'écran de résultats présente uniquement les joueurs inscrits et, lorsqu'il est
+activé, le choix Non / Oui pour un pli détruit par le Kraken.
+Le récapitulatif indique le total des plis remportés et le total attendu.
+Les champs de plis proposent des boutons − et + à la place des flèches de saisie.
+La saisie directe d'un nombre reste possible. Le bouton − est désactivé à zéro,
+et le bouton + au nombre maximal de cartes distribuées.
+
+CAS DE VALIDATION
+À deux joueurs, avec 5 cartes et sans pli détruit, 2 + 3 plis permettent la validation.
+À deux joueurs, avec 5 cartes et un pli détruit, 2 + 2 plis permettent la validation.
+À deux joueurs, avec 5 cartes et sans pli détruit, 2 + 2 plis empêchent la validation.
+Avec 1 carte et un pli détruit, 0 + 0 plis permettent la validation.
+Aucun champ supplémentaire de plis n'est demandé.
+Une annonce zéro réussie avec 5 cartes rapporte 50 points d'annonce, même avec le Kraken.

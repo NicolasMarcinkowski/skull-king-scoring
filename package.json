@@ -1,0 +1,16 @@
+{
+  "name": "skull-king-journal",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.25.0",
+  "type": "module",
+  "engines": { "node": ">=22.12.0" },
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1",
+    "build": "next build",
+    "start": "node scripts/serve-export.mjs",
+    "preview": "node scripts/serve-export.mjs",
+    "test": "node --test src/domain/*.test.js"
+  },
+  "dependencies": { "next": "^16.0.0", "react": "^19.2.0", "react-dom": "^19.2.0" }
+}
