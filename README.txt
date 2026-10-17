@@ -50,7 +50,8 @@ FONCTIONNALITÉS CONSERVÉES
 2 à 8 joueurs humains, 10 manches, score classique.
 Plis annoncés et remportés initialisés à zéro, commandes −/+ et saisie directe.
 Bonus individuels par paliers de 5, accordés uniquement si l'annonce est exacte.
-Option Kraken, déclaration d'un pli détruit, contrôle du total réduit de 1.
+Kraken systématique pour les nouvelles parties, déclaration d'un pli détruit,
+contrôle du total réduit de 1. Les anciennes parties conservent leurs règles.
 Huit cartes aux deux dernières manches à huit joueurs.
 Classement, feuille de score, corrections, revanche et journal des parties.
 Annonces et Résultats & bonus sont désormais de vrais onglets cliquables.

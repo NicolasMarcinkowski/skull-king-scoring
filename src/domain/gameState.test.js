@@ -6,6 +6,19 @@ import { freshRound, isComplete, totals } from './scoring.js';
 const start = (state = emptyState()) => reduce(state, { type: 'START', id: 'test-game', date: '2026-10-17T12:00:00Z', players: ['Astrid', 'Ragnar'], kraken: true });
 const number = (state, field, index, value) => reduce(state, { type: 'SET_NUMBER', field, index, value });
 
+test('new games always use Kraken, even with an old disabled draft', () => {
+  const state = { ...emptyState(), draftKraken: false };
+  const created = reduce(state, { type: 'START', id: 'new-game', players: ['Astrid', 'Ragnar'], kraken: false });
+  assert.equal(selectedGame(created).kraken, true);
+  assert.equal(selectedGame(restoreState(JSON.stringify(created))).kraken, true);
+});
+
+test('restoring an old game does not change its Kraken rules', () => {
+  const saved = start();
+  saved.games[0].kraken = false;
+  assert.equal(selectedGame(restoreState(JSON.stringify(saved))).kraken, false);
+});
+
 test('browser hydration restores the saved journal instead of the empty server state', () => {
   const saved = number(start(), 'bonuses', 0, 20);
   const restored = reduce(emptyState(), { type: 'RESTORE', state: restoreState(JSON.stringify(saved)) });

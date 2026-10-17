@@ -1,7 +1,7 @@
 import { cardsForRound, currentRound, freshRound, isComplete, validateBids, validateRound } from './scoring.js';
 
 export const STORAGE_KEY = 'skullking-journal-v1';
-export const emptyState = () => ({ games: [], draft: ['', '', ''], draftKraken: false, view: { screen: 'home', gameId: null, roundIndex: 0 }, edit: null, error: '' });
+export const emptyState = () => ({ games: [], draft: ['', '', ''], view: { screen: 'home', gameId: null, roundIndex: 0 }, edit: null, error: '' });
 
 // Keeps the storage key and score records from the original JavaScript app.
 export function restoreState(serialized) {
@@ -38,7 +38,6 @@ export function gameReducer(state, action) {
     case 'NAVIGATE': return go(state, action.screen);
     case 'ERROR': return { ...state, error: action.message };
     case 'DRAFT_NAME': return { ...state, draft: state.draft.map((name, index) => index === action.index ? action.name : name), error: '' };
-    case 'DRAFT_KRAKEN': return { ...state, draftKraken: action.enabled };
     case 'ADD_PLAYER': return state.draft.length < 8 ? { ...state, draft: [...state.draft, ''] } : state;
     case 'REMOVE_PLAYER': return state.draft.length > 2 ? { ...state, draft: state.draft.filter((_, index) => index !== action.index) } : state;
     case 'MOVE_PLAYER': {
@@ -50,7 +49,7 @@ export function gameReducer(state, action) {
     case 'START': {
       const names = action.players.map(name => name.trim());
       if (names.length < 2 || names.length > 8 || names.some(name => !name) || new Set(names.map(name => name.toLocaleLowerCase('fr'))).size !== names.length) return { ...state, error: 'Renseignez de 2 à 8 noms distincts.' };
-      const nextGame = { id: action.id, date: action.date, players: names, kraken: action.kraken, rounds: Array.from({ length: 10 }, () => freshRound(names.length)) };
+      const nextGame = { id: action.id, date: action.date, players: names, kraken: true, rounds: Array.from({ length: 10 }, () => freshRound(names.length)) };
       return go({ ...state, games: [nextGame, ...state.games] }, 'round', { gameId: action.id, roundIndex: 0 });
     }
     case 'RESUME': {
