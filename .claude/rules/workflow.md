@@ -17,19 +17,20 @@ User Request -> Read Context -> Plan -> Implement -> Test -> Self-Review -> Pres
 - Si la règle métier change : prévoir les tests AVANT l'implémentation
 
 ### 3. Implement
-- Respecter le style du code existant (JS, pas de TS)
+- Respecter le style du code existant (TypeScript strict, pas de `any`)
 - Logique métier dans `src/domain/`, jamais dans les composants
 - Auto-fix les erreurs évidentes
 
 ### 4. Test
 ```bash
-pnpm test    # doit passer
-pnpm build   # doit passer (export statique)
+pnpm typecheck   # doit passer
+pnpm test        # doit passer
+pnpm build       # doit passer (standalone)
 ```
 
 ### 5. Self-Review
 - Invoquer la skill `self-review` avant tout commit
-- Vérifier les invariants (localStorage, export statique, domain pur)
+- Vérifier les invariants (localStorage, domain pur, jouable hors ligne)
 
 ### 6. Present Result
 - Résumé clair des changements
@@ -49,6 +50,6 @@ pnpm build   # doit passer (export statique)
 | Situation | Skill |
 |-----------|-------|
 | Avant un commit | `self-review` |
-| Modification de scoring.js / gameState.js | `test-scoring` |
+| Modification de scoring.ts / gameState.ts | `test-scoring` |
 | Question sur le déploiement / site down | `deploy` |
 | Nouvelle fonctionnalité demandée | `feature` |

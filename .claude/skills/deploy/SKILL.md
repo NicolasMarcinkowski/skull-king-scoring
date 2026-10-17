@@ -13,9 +13,9 @@ Pipeline : push sur `main` → GitHub Actions → image Docker sur GHCR → SSH 
 |---------|--------|
 | Workflow | `.github/workflows/deploy.yml` |
 | Image | `ghcr.io/nicolasmarcinkowski/skull-king-scoring:latest` |
-| Serveur | nginx:alpine servant l'export statique (`nginx.conf`) |
+| Serveur | node:22-alpine exécutant le build standalone (`node server.js`) |
 | NAS | dossier `/volume1/docker/skull-king-scoring/` (docker-compose.yaml local) |
-| Port NAS | **3011** → 80 (conteneur) |
+| Port NAS | **3011** → 3000 (conteneur) |
 | Secrets GitHub | `NAS_HOST`, `NAS_USERNAME`, `NAS_PASSWORD`, `NAS_PORT` |
 
 Le `docker-compose.prod.yaml` du repo est un modèle ; le fichier actif est celui du NAS.
@@ -45,7 +45,7 @@ curl -s "https://api.github.com/repos/NicolasMarcinkowski/skull-king-scoring/act
 
 ```bash
 docker build -t skull-king-test .
-docker run -d --rm -p 3011:80 --name sk-test skull-king-test
+docker run -d --rm -p 3011:3000 --name sk-test skull-king-test
 curl -s -o /dev/null -w "%{http_code}\n" http://localhost:3011/
 docker stop sk-test
 ```

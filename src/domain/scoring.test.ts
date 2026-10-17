@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { cardsForRound, expectedTricks, freshRound, ranking, score, totals, validateRound } from './scoring.js';
+import { cardsForRound, expectedTricks, freshRound, ranking, score, totals, validateRound } from './scoring.ts';
 
 test('classic scores, failed bonuses and zero bids', () => {
   for (const [cards, bid, won, bonus, expected] of [[5, 3, 3, 0, 60], [5, 2, 4, 30, -20], [7, 0, 0, 0, 70], [7, 0, 2, 0, -70], [5, 2, 2, 30, 70]]) assert.equal(score(bid, won, bonus, cards).total, expected);

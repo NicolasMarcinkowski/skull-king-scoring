@@ -8,9 +8,16 @@
   "scripts": {
     "dev": "next dev --hostname 127.0.0.1",
     "build": "next build",
-    "start": "node scripts/serve-export.mjs",
-    "preview": "node scripts/serve-export.mjs",
-    "test": "node --test src/domain/*.test.js"
+    "start": "node .next/standalone/server.js",
+    "preview": "node .next/standalone/server.js",
+    "test": "node --experimental-strip-types --test src/domain/*.test.ts",
+    "typecheck": "tsc --noEmit"
   },
-  "dependencies": { "next": "^16.0.0", "react": "^19.2.0", "react-dom": "^19.2.0" }
+  "dependencies": { "next": "^16.0.0", "react": "^19.2.0", "react-dom": "^19.2.0" },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5"
+  }
 }

@@ -1,9 +1,17 @@
-import { useEffect, useRef } from 'react';
-import { Button, ErrorMessage, RulePanel } from '../components/ui.jsx';
+import { useEffect, useRef, type Dispatch, type KeyboardEvent } from 'react';
+import { Button, ErrorMessage, RulePanel } from '../components/ui.tsx';
+import type { Action, Screen, State } from '../domain/types.ts';
 
-export default function Setup({ state, dispatch, navigate, review }) {
-  const nameInputs = useRef([]);
-  const pendingFocus = useRef(null);
+type SetupProps = {
+  state: State;
+  dispatch: Dispatch<Action>;
+  navigate: (screen: Screen) => void;
+  review: () => void;
+};
+
+export default function Setup({ state, dispatch, navigate, review }: SetupProps) {
+  const nameInputs = useRef<(HTMLInputElement | null)[]>([]);
+  const pendingFocus = useRef<number | null>(null);
   useEffect(() => {
     if (pendingFocus.current === null) return;
     nameInputs.current[pendingFocus.current]?.focus();
@@ -16,7 +24,7 @@ export default function Setup({ state, dispatch, navigate, review }) {
     dispatch({ type: 'ADD_PLAYER' });
   }
 
-  function nextPlayer(event, index) {
+  function nextPlayer(event: KeyboardEvent<HTMLInputElement>, index: number) {
     if (event.key !== 'Enter' || event.nativeEvent.isComposing) return;
     event.preventDefault();
     if (index < state.draft.length - 1) nameInputs.current[index + 1]?.focus();

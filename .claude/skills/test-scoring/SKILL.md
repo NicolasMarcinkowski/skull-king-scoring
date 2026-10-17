@@ -6,7 +6,7 @@ description: Vérifier les règles de score Skull King (annonces, plis, bonus, K
 # Test Scoring
 
 Référence des règles métier Skull King et procédure de vérification.
-Source de vérité : `src/domain/scoring.js` + `regles-participants-et-plis.txt`.
+Source de vérité : `src/domain/scoring.ts` + `regles-participants-et-plis.txt`.
 
 ## Règles de Score
 
@@ -49,12 +49,12 @@ Source de vérité : `src/domain/scoring.js` + `regles-participants-et-plis.txt`
 ## Procédure de Vérification
 
 ```bash
-pnpm test                                  # tous les tests
-node --test src/domain/scoring.test.js     # scoring seul
-node --test src/domain/gameState.test.js   # état de jeu seul
+pnpm test                                                             # tous les tests
+node --experimental-strip-types --test src/domain/scoring.test.ts    # scoring seul
+node --experimental-strip-types --test src/domain/gameState.test.ts  # état de jeu seul
 ```
 
-Après toute modification de `scoring.js` ou `gameState.js` :
+Après toute modification de `scoring.ts` ou `gameState.ts` :
 1. Ajouter/adapter les tests couvrant le changement
 2. Vérifier que les cas de référence ci-dessus passent toujours
 3. Vérifier la rétrocompatibilité des anciennes sauvegardes

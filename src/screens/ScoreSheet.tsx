@@ -1,7 +1,15 @@
-import { cardsForRound, currentRound, isComplete, score, totals } from '../domain/scoring.js';
-import { Button, GameTitle, signed } from '../components/ui.jsx';
+import type { Dispatch } from 'react';
+import { cardsForRound, currentRound, isComplete, score, totals } from '../domain/scoring.ts';
+import { Button, GameTitle, signed } from '../components/ui.tsx';
+import type { Action, Game } from '../domain/types.ts';
 
-export default function ScoreSheet({ game, dispatch, resume }) {
+type ScoreSheetProps = {
+  game: Game;
+  dispatch: Dispatch<Action>;
+  resume: (id: string) => void;
+};
+
+export default function ScoreSheet({ game, dispatch, resume }: ScoreSheetProps) {
   return <main className="shell"><GameTitle game={game} subtitle="Consultez les manches et corrigez une saisie à tout moment.">La feuille de score</GameTitle><div className="panel table-wrap"><table><thead><tr><th scope="col">Manche</th>{game.players.map((name, i) => <th scope="col" key={i}>{name}</th>)}<th scope="col">Action</th></tr></thead><tbody>{game.rounds.map((round, index) => <tr key={index}><th scope="row">{index + 1}<small>{cardsForRound(game.players.length, index + 1)} cartes · {round.validated ? 'Validée' : index === currentRound(game) && !isComplete(game) ? 'En cours' : 'À venir'}</small>{game.kraken && round.destroyed && <small>Kraken · 1 pli détruit</small>}</th>{game.players.map((_, player) => {
     const points = round.validated ? score(round.bids[player], round.wins[player], round.bonuses[player], cardsForRound(game.players.length, index + 1)) : null;
     return <td key={player}>{points ? <><strong className={points.total < 0 ? 'negative' : 'positive'}>{signed(points.total)}</strong><small>Annonce {round.bids[player]} · Résultat {round.wins[player]}</small><small>Bonus saisis {round.bonuses[player]} · accordés {points.bonus}</small></> : '—'}</td>;

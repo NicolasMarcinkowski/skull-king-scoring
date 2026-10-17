@@ -2,14 +2,17 @@
 
 ## Code Style
 
-### JavaScript
-- Projet en JavaScript pur (JSX) — ne pas introduire TypeScript
-- Modules ES (`type: "module"`), imports explicites
-- Fonctions courtes et pures dans `src/domain/`
+### TypeScript
+- Strict mode activé — pas de `any` (exceptions documentées uniquement)
+- Types partagés dans `src/domain/types.ts` (Game, Round, State, Action...)
+- `Action` est une union discriminée : toute nouvelle action du réducteur y est ajoutée
+- Modules ES, imports de types avec `import type` (verbatimModuleSyntax)
+- Dans `src/domain/` : extensions `.ts` explicites dans les imports et syntaxe
+  « erasable only » (pas d'enum/namespace) — requis par le type stripping de Node
 - Pas de `console.log` en production
 
 ### React
-- Composants fonctionnels uniquement
+- Composants fonctionnels uniquement, props typées
 - Hooks personnalisés dans `src/hooks/`
 - `src/domain/` ne doit JAMAIS importer React
 
@@ -23,29 +26,29 @@
 
 ### Séparation stricte
 ```
-src/domain/     # Logique métier pure, testable avec node --test
+src/domain/     # Logique métier pure + types, testable avec node --test
 src/screens/    # Écrans (un fichier par écran)
 src/components/ # UI réutilisable
 src/hooks/      # Pont React <-> localStorage
 ```
 
 - Toute nouvelle règle de jeu va dans `src/domain/` AVEC ses tests
-- Les écrans ne calculent pas de scores : ils appellent `scoring.js`
+- Les écrans ne calculent pas de scores : ils appellent `scoring.ts`
 
-### Contraintes export statique
-- Pas d'API routes, pas de server components dynamiques
-- Pas de dépendance à un serveur Node au runtime
-- `next.config.mjs` garde `output: 'export'`
+### Serveur (standalone)
+- `next.config.ts` garde `output: 'standalone'`
+- L'app de jeu reste 100% client-side (localStorage) : pas de dépendance serveur
+  pour jouer. Les API routes sont autorisées pour les features portail à venir
 
 ## Testing
 
-- Tests avec `node --test` natif dans `src/domain/*.test.js`
-- Toute modification de `scoring.js` ou `gameState.js` doit être couverte
+- Tests avec `node --test` natif dans `src/domain/*.test.ts` (type stripping)
+- Toute modification de `scoring.ts` ou `gameState.ts` doit être couverte
 - Les cas de validation de `regles-participants-et-plis.txt` font foi
-- `pnpm test` doit passer avant tout commit
+- `pnpm typecheck` et `pnpm test` doivent passer avant tout commit
 
 ## Persistance
 
 - Clé localStorage : `skullking-journal-v1` — ne jamais la renommer
 - Toute évolution du format de sauvegarde doit inclure une migration
-  des anciennes parties dans `gameState.js`
+  des anciennes parties dans `gameState.ts`

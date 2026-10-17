@@ -21,11 +21,12 @@ git status
 git diff --stat HEAD
 ```
 
-### 2. Tests & Build
+### 2. Types, Tests & Build
 
 ```bash
-pnpm test     # 0 échec attendu
-pnpm build    # export statique doit réussir
+pnpm typecheck   # 0 erreur attendue
+pnpm test        # 0 échec attendu
+pnpm build       # build standalone doit réussir
 ```
 
 ### 3. Vérifier les invariants du projet
@@ -33,8 +34,9 @@ pnpm build    # export statique doit réussir
 - [ ] `src/domain/` n'importe pas React ni de module navigateur
 - [ ] Clé localStorage `skullking-journal-v1` inchangée
 - [ ] Pas de lecture localStorage pendant le rendu initial (hydratation)
-- [ ] `next.config.mjs` garde `output: 'export'`
-- [ ] Pas de TypeScript introduit, pas de dépendance ajoutée sans accord
+- [ ] `next.config.ts` garde `output: 'standalone'`
+- [ ] Pas de `any`, pas de dépendance ajoutée sans accord
+- [ ] Le jeu reste jouable hors ligne (pas de dépendance serveur côté jeu)
 
 ### 4. Patterns problématiques
 
@@ -60,6 +62,7 @@ Chercher dans les fichiers modifiés :
 |---------|-------------|--------|
 
 ### Métriques
+- Types : OK / X erreurs
 - Tests : OK / X échecs
 - Build : OK / erreur
 - Invariants : OK / X alertes

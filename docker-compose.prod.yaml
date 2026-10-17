@@ -4,4 +4,4 @@ services:
     container_name: skull-king-scoring-app
     restart: unless-stopped
     ports:
-      - "3011:80"
+      - "3011:3000"

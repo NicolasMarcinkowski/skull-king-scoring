@@ -8,3 +8,4 @@ out/
 !.env.example
 *.log
 .claude/settings.local.json
+tsconfig.tsbuildinfo

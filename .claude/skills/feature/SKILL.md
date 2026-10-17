@@ -19,19 +19,21 @@ Workflow structuré pour ajouter ou modifier une fonctionnalité.
 - Lister les étapes avec le suivi de tâches
 - Décider : la logique va-t-elle dans `src/domain/` (règle métier, calcul)
   ou dans les composants (pure UI) ?
-- Si le format de sauvegarde change : prévoir la migration dans `gameState.js`
+- Si le format de sauvegarde change : prévoir la migration dans `gameState.ts`
 
 ### 3. Implémentation
-- Règle métier → `src/domain/` + tests dans `src/domain/*.test.js` (node --test)
-- Écran → `src/screens/`, composant réutilisable → `src/components/ui.jsx`
+- Règle métier → `src/domain/` + tests dans `src/domain/*.test.ts` (node --test)
+- Nouveaux types/actions → `src/domain/types.ts` (union discriminée `Action`)
+- Écran → `src/screens/`, composant réutilisable → `src/components/ui.tsx`
 - Styles → `src/styles/` en respectant la DA nordique
-- JamaIS de TypeScript, pas de nouvelle dépendance sans accord explicite
+- TypeScript strict, pas de `any`, pas de nouvelle dépendance sans accord explicite
 
 ### 4. Vérification
 ```bash
-pnpm test     # tests métier
-pnpm build    # export statique OK
-pnpm dev      # vérif visuelle si pertinent
+pnpm typecheck   # tsc --noEmit
+pnpm test        # tests métier
+pnpm build       # build standalone OK
+pnpm dev         # vérif visuelle si pertinent
 ```
 
 ### 5. Présentation
@@ -41,7 +43,10 @@ pnpm dev      # vérif visuelle si pertinent
 
 ## Pièges connus
 
-- `output: 'export'` interdit API routes et features serveur
+- Le jeu doit rester jouable hors ligne : pas de dépendance serveur pour la
+  partie jeu (les API routes sont réservées aux features portail)
+- Dans `src/domain/` : imports avec extension `.ts` et syntaxe « erasable only »
+  (pas d'enum/namespace) — sinon les tests node --test cassent
 - Le premier rendu doit être identique serveur/client (hydratation) :
   ne jamais lire localStorage pendant le rendu initial
 - À 8 joueurs, les manches 9 et 10 restent à 8 cartes (`cardsForRound`)
