@@ -1,0 +1,38 @@
+# Dependencies
+node_modules
+
+# Build outputs
+.next
+out
+
+# Git
+.git
+.gitignore
+
+# Environment
+.env
+.env.*
+
+# IDE
+.vscode
+.idea
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Docker
+Dockerfile
+docker-compose*
+.dockerignore
+
+# Documentation
+README.txt
+*.md
+
+# Claude Code
+.claude/

@@ -1,0 +1,7 @@
+services:
+  app:
+    image: ghcr.io/nicolasmarcinkowski/skull-king-scoring:latest
+    container_name: skull-king-scoring-app
+    restart: unless-stopped
+    ports:
+      - "3011:80"
