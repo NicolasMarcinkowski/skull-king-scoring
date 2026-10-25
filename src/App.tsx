@@ -32,6 +32,12 @@ export default function App() {
   useEffect(() => { if (!notification) return; const timer = setTimeout(() => setNotification(''), 2800); return () => clearTimeout(timer); }, [notification]);
   const navigate = (next: Screen) => dispatch({ type: 'NAVIGATE', screen: next });
   const resume = (id: string) => dispatch({ type: 'RESUME', id });
+  const rankingGame = game ?? state.games[0];
+  function showRanking() {
+    if (!rankingGame) return;
+    if (!game) resume(rankingGame.id);
+    navigate('sheet');
+  }
   function confirm(title: string, content: ReactNode, label: string, action: () => void) { setModal({ title, content, label, confirm: () => { close(); action(); } }); }
   function start(players: string[]) { dispatch({ type: 'START', id: crypto.randomUUID(), date: new Date().toISOString(), players }); }
   function newGame() {
@@ -73,7 +79,7 @@ export default function App() {
     case 'round': page = game ? <Round state={state} game={game} dispatch={dispatch} navigate={navigate} reviewScores={reviewScores} enableKraken={enableKraken} /> : null; break;
     case 'sheet': page = game ? <ScoreSheet game={game} dispatch={dispatch} resume={resume} /> : null; break;
     case 'finish': page = game ? <Finish game={game} navigate={navigate} rematch={rematch} newGame={newGame} /> : null; break;
-    default: page = <Home state={state} resume={resume} newGame={newGame} showRules={showRules} />;
+    default: page = <Home state={state} resume={resume} newGame={newGame} showRules={showRules} showHistory={() => navigate('history')} />;
   }
-  return <Layout screen={screen} saved={saved} navigate={navigate} showRules={showRules}>{page}<Modal modal={modal} onClose={close} /><div id="toast" className={notification ? 'show' : ''} role="status" aria-live="polite">{notification}</div></Layout>;
+  return <Layout screen={screen} saved={saved} navigate={navigate} showRules={showRules} showRanking={showRanking} rankingAvailable={!!rankingGame}>{page}<Modal modal={modal} onClose={close} /><div id="toast" className={notification ? 'show' : ''} role="status" aria-live="polite">{notification}</div></Layout>;
 }

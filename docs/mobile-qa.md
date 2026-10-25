@@ -50,8 +50,8 @@ Parcours tactile vérifié à 320 et 390 px :
 
 La carte standard reste compacte sur téléphone (sans avertissement ni nom sur
 plusieurs lignes). Les bonus et plis sont côte à côte ; l'aperçu des points reste
-visible en tête. Les annonces sont regroupées juste sous les onglets, avec leur
-total face aux plis disponibles (Kraken inclus) et le ratio remportés / annoncés
+visible en tête. Le récapitulatif est juste sous les onglets, avec le total
+des plis remportés face aux plis disponibles (Kraken inclus), et le ratio remportés / annoncés
 de chacun : vert si exact, rouge sinon. Il n'y a plus de bouton « ⋯ ».
 
 Vérifié de 320 à 1280 px : cibles tactiles de 44 px minimum,
@@ -68,8 +68,13 @@ noms longs sans débordement horizontal.
   provisoire, sans répétition immédiate. Une correction remplace les points de
   la manche dans ce classement ; elle ne les ajoute pas deux fois.
 - La phrase pirate est en tête de confirmation, avec un pavillon, en italique.
-- Le « ? » est face au logo. Accueil et Journal restent fixés au bas de l'écran ;
+- Le total et la barre de progression réagissent à chaque saisie de plis remportés :
+  par exemple 3/3 → 2/3 lorsqu'on retire un pli. Changer un bonus ne change pas ce total.
+- Le « ? » est face au logo. Accueil et Classement restent fixés au bas de l'écran ;
   les derniers contrôles et la notification doivent rester au-dessus de cette barre.
+- Classement ouvre la feuille de score de la partie sélectionnée, ou de la plus
+  récente si aucune n'est sélectionnée ; le bouton est désactivé sans partie.
+  Le journal complet est accessible depuis l'accueil.
 - Le bouton Feuille de score est en fin de page, après le classement.
 - Feuille de score : classement, puis détail des manches validées et en cours
   uniquement, sur mobile comme sur ordinateur.

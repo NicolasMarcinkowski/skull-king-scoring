@@ -23,14 +23,13 @@ export default function Round({ state, game, dispatch, navigate, reviewScores, e
   const round = selectedRound(state);
   if (!round) return null;
   const index = state.view.roundIndex, cards = cardsForRound(game.players.length, index + 1), results = round.phase === 'results', expected = expectedTricks(round, cards, !!game.kraken);
-  const bidSum = round.bids.reduce((total, value) => total + value, 0);
+  const wonSum = round.wins.reduce((total, value) => total + value, 0);
   const setStage = (phase: Phase) => dispatch({ type: 'STAGE', phase });
   const setNumber = (field: NumberField, player: number, value: number) => dispatch({ type: 'SET_NUMBER', field, index: player, value });
   return <main className="shell"><GameTitle game={game} id="round-heading">{state.edit ? 'Corriger la manche ' : 'Manche '}{index + 1}</GameTitle><div className="round-strip" aria-label="Les dix manches">{game.rounds.map((item, i) => <button key={i} className={`round-chip ${item.validated ? 'done' : ''} ${i === index ? 'current' : ''}`} aria-label={`Manche ${i + 1}${item.validated ? ', validée' : ''}`} disabled={!item.validated && i !== currentRound(game)} onClick={() => dispatch({ type: 'OPEN_ROUND', index: i })}>{item.validated ? '✓ ' : ''}{i + 1}</button>)}</div><div className="section-head"><StageTabs phase={round.phase} onChange={setStage} /></div><div className="round-layout"><section id="round-panel" role="tabpanel" aria-labelledby={`tab-${round.phase}`}>
     {results && <section className="bid-overview panel" aria-label="Récapitulatif des plis annoncés">
-      <div className="panel-title"><h3>Plis annoncés</h3><strong className={bidSum === expected ? 'positive' : 'negative'}>{bidSum} / {expected}</strong></div>
-      <p className="intro">Total annoncé / disponible · Par joueur : remportés / annoncés</p>
-      <progress max={Math.max(1, expected)} value={Math.min(bidSum, expected)} aria-label={`${bidSum} plis annoncés pour ${expected} plis disponibles`} />
+      <div className="panel-title"><h3>Plis annoncés</h3><strong className={wonSum === expected ? 'positive' : 'negative'} aria-label={`Total des plis remportés : ${wonSum} sur ${expected}`}>{wonSum} / {expected}</strong></div>
+      <progress max={Math.max(1, expected)} value={Math.min(wonSum, expected)} aria-label={`${wonSum} plis remportés pour ${expected} plis disponibles`} />
       <div className="bid-chips">{game.players.map((name, player) => <div className="bid-chip" key={player}><span>{name}</span><strong className={round.wins[player] === round.bids[player] ? 'positive' : 'negative'} aria-label={`${name} : ${round.wins[player]} plis remportés sur ${round.bids[player]} annoncés`}>{round.wins[player]}/{round.bids[player]}</strong></div>)}</div>
     </section>}
     {game.players.map((name, player) => {
