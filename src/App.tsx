@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Layout from './components/Layout.tsx';
-import { Modal, scoreClass, signed, type ModalData } from './components/ui.tsx';
+import { Modal, PirateIcon, scoreClass, signed, type ModalData } from './components/ui.tsx';
 import { pirateQuip } from './components/pirateQuip.ts';
 import Home, { History } from './screens/Home.tsx';
 import Setup from './screens/Setup.tsx';
@@ -23,8 +23,8 @@ export default function App() {
   const phase = screen === 'round' ? selectedRound(state)?.phase : null;
   const close = () => setModal(null);
   useEffect(() => {
-    if (screen === 'round' && phase === 'results') {
-      document.getElementById('win-0')?.closest('.player-card')?.scrollIntoView({ block: 'start', behavior: 'instant' });
+    if (screen === 'round') {
+      document.getElementById('round-heading')?.scrollIntoView({ block: 'start', behavior: 'instant' });
     } else {
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
@@ -52,12 +52,12 @@ export default function App() {
     const projected = { ...game, rounds: game.rounds.map((item, index) => index === state.view.roundIndex ? { ...round, validated: true } : item) };
     const quip = pirateQuip(ranking(projected), previousQuip.current);
     previousQuip.current = quip;
-    const content = <>{game.players.map((name, player) => {
+    const content = <><p className="pirate-quip"><PirateIcon /><span>{quip.replace(/[.!?]+$/, '')} !!!</span></p>{game.players.map((name, player) => {
       const total = score(round.bids[player], round.wins[player], round.bonuses[player], cards).total;
       const previous = game.rounds[state.view.roundIndex];
       const old = previous.validated ? score(previous.bids[player], previous.wins[player], previous.bonuses[player], cards).total : null;
       return <div className="rule-line" key={player}><span>{name}</span><strong>{old !== null && <><span className={scoreClass(old)}>{signed(old)}</span> → </>}<span className={scoreClass(total)}>{signed(total)} pts</span></strong></div>;
-    })}{game.kraken && <p>Kraken : {round.destroyed ? 'présent' : 'absent'}.</p>}<p className="pirate-quip">{quip}</p></>;
+    })}{game.kraken && <p>Kraken : {round.destroyed ? 'présent' : 'absent'}.</p>}</>;
     confirm(state.edit ? 'Confirmer la correction' : `Valider la manche ${state.view.roundIndex + 1}`, content, state.edit ? 'Enregistrer la correction' : 'Valider les scores', () => { dispatch({ type: 'COMMIT' }); setNotification(state.edit ? 'Correction enregistrée' : 'Manche validée · Scores enregistrés'); });
   }
   function showRules() { confirm('Le code des mers', <><p>Annonce positive exacte : <strong>+20 points par pli</strong>.<br />Annonce positive manquée : <strong>−10 points par pli d’écart</strong>.</p><p>Zéro annoncé : <strong>+10 points par carte</strong> si aucun pli n’est remporté ; sinon <strong>−10 points par carte</strong>.</p><p>Saisissez les bonus par paliers de 5. Ils sont accordés uniquement si l’annonce est exacte. Le groupe vérifie leur montant autour de la table.</p><p>Lorsqu’un pli est détruit, indiquez Kraken présent. Le total attendu diminue de 1 ; les points restent basés sur les cartes distribuées.</p><p>À 8 joueurs, les deux dernières manches se jouent avec 8 cartes.</p></>, 'Compris', () => {}); }

@@ -39,7 +39,7 @@ Parcours tactile vérifié à 320 et 390 px :
 1. Nouvelle partie, saisie des noms et Entrée pour passer au nom suivant.
 2. Suppression et déplacement d'un joueur.
 3. Confirmation de l'équipage et des annonces.
-4. Ouverture des résultats sur le premier joueur, sans ouverture forcée du clavier.
+4. Ouverture des résultats au titre de la manche, sans ouverture forcée du clavier.
 5. Boutons +/− des plis, ajout d'un bonus et déclaration du Kraken.
 6. Validation : le score affiché est celui enregistré.
 7. Consultation d'une manche dans la feuille de score mobile et correction du bonus.
@@ -48,13 +48,13 @@ Parcours tactile vérifié à 320 et 390 px :
 
 ### Résultats compacts
 
-La carte standard reste compacte sur téléphone (sans détail déplié,
-avertissement ni nom sur plusieurs lignes). Les bonus et plis sont côte à côte ;
-l'aperçu des points reste visible en tête. Les annonces sont regroupées sous les
-saisies, avec leur total face aux plis disponibles (Kraken inclus).
-Le bouton « ⋯ » ouvre le calcul sans modifier les valeurs.
+La carte standard reste compacte sur téléphone (sans avertissement ni nom sur
+plusieurs lignes). Les bonus et plis sont côte à côte ; l'aperçu des points reste
+visible en tête. Les annonces sont regroupées juste sous les onglets, avec leur
+total face aux plis disponibles (Kraken inclus) et le ratio remportés / annoncés
+de chacun : vert si exact, rouge sinon. Il n'y a plus de bouton « ⋯ ».
 
-Vérifié de 320 à 1280 px : cibles tactiles de 44 px minimum, détails accessibles,
+Vérifié de 320 à 1280 px : cibles tactiles de 44 px minimum,
 alerte de bonus non accordés, validation, correction des annonces, annulation et
 noms longs sans débordement horizontal.
 
@@ -67,6 +67,10 @@ noms longs sans débordement horizontal.
 - Confirmation : couleurs des scores et phrase pirate tirée du classement
   provisoire, sans répétition immédiate. Une correction remplace les points de
   la manche dans ce classement ; elle ne les ajoute pas deux fois.
+- La phrase pirate est en tête de confirmation, avec un pavillon, en italique.
+- Le « ? » est face au logo. Accueil et Journal restent fixés au bas de l'écran ;
+  les derniers contrôles et la notification doivent rester au-dessus de cette barre.
+- Le bouton Feuille de score est en fin de page, après le classement.
 - Feuille de score : classement, puis détail des manches validées et en cours
   uniquement, sur mobile comme sur ordinateur.
 - Classement : pavillon pirate pour les premiers ex æquo, rangs numériques
