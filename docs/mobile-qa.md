@@ -48,14 +48,32 @@ Parcours tactile vérifié à 320 et 390 px :
 
 ### Résultats compacts
 
-La carte standard mesure environ 140 px sur téléphone (sans détail déplié,
-avertissement ni nom sur plusieurs lignes). Les plis et bonus sont côte à côte ;
-l'annonce, le cumul et l'aperçu des points restent visibles en tête.
+La carte standard reste compacte sur téléphone (sans détail déplié,
+avertissement ni nom sur plusieurs lignes). Les bonus et plis sont côte à côte ;
+l'aperçu des points reste visible en tête. Les annonces sont regroupées sous les
+saisies, avec leur total face aux plis disponibles (Kraken inclus).
 Le bouton « ⋯ » ouvre le calcul sans modifier les valeurs.
 
 Vérifié de 320 à 1280 px : cibles tactiles de 44 px minimum, détails accessibles,
 alerte de bonus non accordés, validation, correction des annonces, annulation et
 noms longs sans débordement horizontal.
+
+### Retours de table
+
+- Préparation : nom, déplacement, suppression et ajout sur la même ligne.
+- Plis annoncés : nom et saisie sur la même ligne, libellé conservé pour les
+  lecteurs d'écran uniquement.
+- Résultats : bonus à gauche, plis à droite ; Kraken compact présent / absent.
+- Confirmation : couleurs des scores et phrase pirate tirée du classement
+  provisoire, sans répétition immédiate. Une correction remplace les points de
+  la manche dans ce classement ; elle ne les ajoute pas deux fois.
+- Feuille de score : classement, puis détail des manches validées et en cours
+  uniquement, sur mobile comme sur ordinateur.
+- Classement : pavillon pirate pour les premiers ex æquo, rangs numériques
+  pour les autres ; scores positifs verts, négatifs rouges, zéro neutre.
+
+Tests des phrases, en complément de `pnpm test` :
+`node --experimental-strip-types --test src/components/pirateQuip.test.ts`.
 
 ## À vérifier sur un vrai téléphone avant publication
 

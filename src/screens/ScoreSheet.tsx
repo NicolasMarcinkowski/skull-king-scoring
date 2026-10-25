@@ -23,13 +23,14 @@ export default function ScoreSheet({ game, dispatch, resume }: ScoreSheetProps) 
         ? score(round.bids[player], round.wins[player], round.bonuses[player], cards)
         : null),
     };
-  });
+  }).filter(item => item.available);
   const roundAction = (index: number, validated: boolean) => <Button variant="secondary" aria-label={`${validated ? 'Corriger' : 'Reprendre'} la manche ${index + 1}`} onClick={() => dispatch({ type: 'OPEN_ROUND', index })}>{validated ? 'Corriger' : 'Reprendre'}</Button>;
 
   return <main className="shell">
     <GameTitle game={game} subtitle="Consultez les manches et corrigez une saisie à tout moment.">La feuille de score</GameTitle>
+    <section className="panel score-ranking" aria-label="Classement"><h2>Classement</h2><Ranking game={game} /></section>
+    <h2 className="score-section-title">Détail par manche</h2>
     <div className="score-mobile">
-      <section className="panel" aria-label="Totaux des joueurs"><h2>Totaux</h2><Ranking game={game} /></section>
       <p className="intro">Touchez une manche pour voir les points de chaque joueur.</p>
       {rounds.map(({ round, index, cards, available, status, points }) => <details className="score-round" key={index} open={index === (complete ? 9 : current)}>
         <summary><span>Manche {index + 1}<small>{cards} carte{cards > 1 ? 's' : ''}{game.kraken && round.destroyed ? ' · Kraken : 1 pli détruit' : ''}</small></span><span className="badge">{status}</span></summary>

@@ -6,6 +6,44 @@ body { overflow-wrap: anywhere; }
 .grid { grid-template-columns: minmax(0, 1fr) 310px; }
 .round-layout { grid-template-columns: minmax(0, 1fr) 285px; }
 button { touch-action: manipulation; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.field-unlabelled { display: block; }
+.rank .points.positive, .rule-line .positive { color: var(--green); }
+.rank .points.negative, .rule-line .negative { color: var(--red); }
+.neutral, .rank .points.neutral, .rule-line .neutral { color: var(--muted); }
+.rank small { display: flex; align-items: center; width: 28px; flex-shrink: 0; }
+.pirate-icon { width: 24px; height: 24px; color: var(--gold); }
+.pirate-quip { margin: 18px 0 0; padding: 12px; background: #d1ac6a0c; border-left: 2px solid var(--gold); }
+.score-ranking h2 { margin-bottom: 8px; font-size: 24px; }
+.score-section-title { margin: 24px 0 16px; font-size: 24px; }
+.bids-player-card { display: grid; grid-template-columns: minmax(0, 1fr) 148px; align-items: center; gap: 12px; padding: 10px; }
+.bids-player-card .player-card-head { display: block; margin: 0; }
+.bids-player-card .avatar { display: none; }
+.bids-player-card .player-identity strong { font-size: 14px; }
+.bids-player-card .player-inputs { display: block; }
+.bids-player-card .field-unlabelled { display: block; }
+.kraken-card { display: flex; align-items: center; gap: 12px; padding: 10px; }
+.kraken-card h3 { margin: 0; flex: 1; font-size: 16px; }
+.kraken-card .kraken-choices { display: flex; gap: 8px; }
+.kraken-card .btn { min-width: 0; padding: 10px; font-size: 13px; }
+.bid-overview { margin: 12px 0; padding: 16px; }
+.bid-overview .panel-title { margin-bottom: 8px; }
+.bid-overview h3 { font-size: 17px; }
+.bid-overview .intro { margin-bottom: 8px; font-size: 12px; }
+.bid-overview progress { display: block; width: 100%; height: 8px; accent-color: var(--gold); margin-bottom: 12px; }
+.bid-chips { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; }
+.bid-chip { display: flex; justify-content: space-between; gap: 8px; padding: 8px; background: #0c171f; border: 1px solid var(--line); border-radius: 4px; font-size: 12px; }
+.bid-chip span { min-width: 0; }
+.bid-chip strong { color: var(--gold); flex-shrink: 0; }
 /* Avoid automatic iOS zoom when the keyboard opens, without disabling pinch zoom. */
 input { font-size: 16px; }
 .player-edit-controls { display: flex; gap: 8px; }
@@ -112,17 +150,19 @@ body:has(dialog[open]) { overflow: hidden; }
   .session-info strong { line-height: 1.6; }
   .session-info small { font-size: 12px; line-height: 1.6; }
 
-  /* Names get a full row; reordering/removal no longer squeeze the input. */
+  /* Inline actions keep the whole crew visible without making targets smaller. */
+  .setup-panel { padding: 10px; }
   .player-edit {
     display: grid;
-    grid-template-columns: 36px minmax(0, 1fr);
-    gap: 10px;
-    padding-bottom: 16px;
-    margin-bottom: 16px;
-    border-bottom: 1px solid var(--line);
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px;
+    padding-bottom: 0;
+    margin-bottom: 8px;
+    border: 0;
   }
-  .player-edit .input { width: 100%; min-height: 48px; }
-  .player-edit-controls { grid-column: 2; justify-content: flex-end; gap: 12px; }
+  .player-edit .avatar { display: none; }
+  .player-edit .input { width: 100%; min-height: 48px; padding: 8px 4px; }
+  .player-edit-controls { grid-column: 2; justify-content: flex-end; gap: 4px; }
   .player-edit .small-btn { min-width: 44px; min-height: 44px; font-size: 20px; }
   .round-strip { gap: 8px; overscroll-behavior-x: contain; }
   .round-chip { flex: 0 0 44px; height: 44px; }
@@ -153,6 +193,8 @@ body:has(dialog[open]) { overflow: hidden; }
     min-width: 0;
   }
   .field label, .field-readonly > span { margin: 0; font-size: 13px; line-height: 1.6; }
+  .bids-player-card .field-unlabelled { display: block; }
+  .bids-player-card .player-card-head { display: block; margin: 0; }
   .field-readonly output { text-align: center; font-size: 18px; }
   .trick-stepper, .stepper {
     display: grid;
@@ -211,6 +253,8 @@ body:has(dialog[open]) { overflow: hidden; }
     gap: 12px;
   }
   .kraken-choices button { min-width: 0; }
+  .kraken-card { padding: 10px; }
+  .kraken-card .kraken-choices { display: flex; gap: 8px; }
   .rank { font-size: 14px; line-height: 1.6; }
   .rank small, .rank .points { flex-shrink: 0; }
 

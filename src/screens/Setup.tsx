@@ -31,5 +31,21 @@ export default function Setup({ state, dispatch, navigate, review }: SetupProps)
     else if (event.currentTarget.value.trim()) addPlayer();
   }
 
-  return <main className="shell"><div className="page-title"><span className="eyebrow">Préparer la traversée</span><h1>Rassemblez votre équipage</h1><p className="intro">De 2 à 8 joueurs. Dix manches pour écrire votre légende.</p></div><div className="grid"><section className="panel"><div className="panel-title"><h3>Les membres d’équipage</h3><span className="badge">{state.draft.length} / 8 JOUEURS</span></div>{state.draft.map((name, index) => <div className="player-edit" key={index}><span className="avatar">{index + 1}</span><input ref={element => { nameInputs.current[index] = element; }} className="input" aria-label={`Nom du joueur ${index + 1}`} placeholder={`Nom du joueur ${index + 1}`} enterKeyHint="next" autoComplete="off" maxLength={40} value={name} onKeyDown={event => nextPlayer(event, index)} onChange={event => dispatch({ type: 'DRAFT_NAME', index, name: event.target.value })} /><div className="player-edit-controls"><button className="small-btn" disabled={index === 0} onClick={() => dispatch({ type: 'MOVE_PLAYER', index, direction: -1 })} aria-label={`Monter le joueur ${index + 1}`}>↑</button><button className="small-btn" disabled={index === state.draft.length - 1} onClick={() => dispatch({ type: 'MOVE_PLAYER', index, direction: 1 })} aria-label={`Descendre le joueur ${index + 1}`}>↓</button><button className="small-btn" disabled={state.draft.length <= 2} onClick={() => dispatch({ type: 'REMOVE_PLAYER', index })} aria-label={`Retirer le joueur ${index + 1}`}>×</button></div></div>)}<Button variant="secondary" disabled={state.draft.length >= 8} onClick={addPlayer}>＋ Ajouter un joueur</Button><ErrorMessage message={state.error} /><div className="form-actions"><Button onClick={() => navigate('home')}>← Retour</Button><Button variant="primary" onClick={review}>Vérifier l’équipage →</Button></div></section><RulePanel /></div></main>;
+  return <main className="shell">
+    <div className="page-title"><span className="eyebrow">Préparer la traversée</span><h1>Rassemblez votre équipage</h1><p className="intro">De 2 à 8 joueurs. Dix manches pour écrire votre légende.</p></div>
+    <div className="grid"><section className="panel setup-panel">
+      <div className="panel-title"><h3>Les membres d’équipage</h3><span className="badge">{state.draft.length} / 8 JOUEURS</span></div>
+      {state.draft.map((name, index) => <div className="player-edit" key={index}>
+        <span className="avatar">{index + 1}</span>
+        <input ref={element => { nameInputs.current[index] = element; }} className="input" aria-label={`Nom du joueur ${index + 1}`} placeholder={`Joueur ${index + 1}`} enterKeyHint="next" autoComplete="off" maxLength={40} value={name} onKeyDown={event => nextPlayer(event, index)} onChange={event => dispatch({ type: 'DRAFT_NAME', index, name: event.target.value })} />
+        <div className="player-edit-controls">
+          <button className="small-btn" disabled={index === 0} onClick={() => dispatch({ type: 'MOVE_PLAYER', index, direction: -1 })} aria-label={`Monter le joueur ${index + 1}`}>↑</button>
+          <button className="small-btn" disabled={index === state.draft.length - 1} onClick={() => dispatch({ type: 'MOVE_PLAYER', index, direction: 1 })} aria-label={`Descendre le joueur ${index + 1}`}>↓</button>
+          <button className="small-btn" disabled={state.draft.length <= 2} onClick={() => dispatch({ type: 'REMOVE_PLAYER', index })} aria-label={`Retirer le joueur ${index + 1}`}>×</button>
+          {index === state.draft.length - 1 && <button className="small-btn" disabled={state.draft.length >= 8} onClick={addPlayer} aria-label="Ajouter un joueur">＋</button>}
+        </div>
+      </div>)}
+      <ErrorMessage message={state.error} /><div className="form-actions"><Button onClick={() => navigate('home')}>← Retour</Button><Button variant="primary" onClick={review}>Vérifier l’équipage →</Button></div>
+    </section><RulePanel /></div>
+  </main>;
 }
